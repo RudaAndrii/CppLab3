@@ -2,46 +2,44 @@
 
 using namespace std;
 
-void selectionSort(int** matrix, int rows, int columns);
-void f(int** matrix, int rows, int columns);
-void F(int* arrayWithResults, int arrayLength);
-void swap(int* a, int* b);
-void showMatrix(int** matrix, int rows, int columns);
+void selectionSort(int** matrix, int matrixSize);
+void calculateProductAboveAuxiliaryDiagonal(int** matrix, int matrixSize);
+void sumOfArrayElements(int* arrayWithResults, int arrayLength);
+void showMatrixToConsole(int** matrix, int matrixSize);
 
 int main() {
 
-	int ROWS, COLUMNS;
-	cout << "Enter rows and columns amount: ";
-	cin >> ROWS;
-	COLUMNS = ROWS;
+	int matrixSize;
+	cout << "Enter matrix size: ";
+	cin >> matrixSize;
 
-	int** matrix = new int*[ROWS];
+	int** matrix = new int*[matrixSize];
 	
-	for (int i = 0; i < ROWS; i++) {
-		matrix[i] = new int[COLUMNS];
+	for (int i = 0; i < matrixSize; i++) {
+		matrix[i] = new int[matrixSize];
 
-		for (int j = 0; j < COLUMNS; j++) {
+		for (int j = 0; j < matrixSize;j++) {
 			cout << "Enter " << i+1 << ";" << j+1 << " matrix element: ";
 			cin >> matrix[i][j];
 		}
 	}
 
 	cout << "\nUnsorted matrix: \n";
-	showMatrix(matrix, ROWS, COLUMNS);
+	showMatrixToConsole(matrix, matrixSize);
 
-	selectionSort(matrix, ROWS, COLUMNS);
+	selectionSort(matrix, matrixSize);
 
 	cout << "\nSorted matrix: \n";
-	showMatrix(matrix, ROWS, COLUMNS);
+	showMatrixToConsole(matrix, matrixSize);
 
 	cout << "\n";
 
-	f(matrix, ROWS, COLUMNS);
+	calculateProductAboveAuxiliaryDiagonal(matrix, matrixSize);
 }
 
-void showMatrix(int** matrix, int rows, int columns) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < columns; j++) {
+void showMatrixToConsole(int** matrix, int matrixSize) {
+	for (int i = 0; i < matrixSize; i++) {
+		for (int j = 0; j < matrixSize; j++) {
 
 			
 			printf("%d\t", matrix[i][j]);
@@ -53,11 +51,11 @@ void showMatrix(int** matrix, int rows, int columns) {
 
 
 
-void selectionSort(int** matrix, int rows, int columns) {
-	for (int columnNumber = 0; columnNumber < columns; columnNumber++) {
-		for (int j = 0; j < rows; j++) {
+void selectionSort(int** matrix, int matrixSize) {
+	for (int columnNumber = 0; columnNumber < matrixSize; columnNumber++) {
+		for (int j = 0; j < matrixSize; j++) {
 			int minElementIndex = j;
-			for (int k = j; k < rows; k++) {
+			for (int k = j; k < matrixSize; k++) {
 				if (matrix[k][columnNumber] < matrix[minElementIndex][columnNumber]) {
 					minElementIndex = k;
 				}
@@ -69,29 +67,23 @@ void selectionSort(int** matrix, int rows, int columns) {
 	}
 }
 
-void swap(int* a, int* b) {
-	int buff = *a;
-	*a = *b;
-	*b = buff;
-}
-
-void f(int** matrix, int rows, int columns) {
-	int* results = new int[rows - 1];
-	for (int i = 0; i < rows - 1; i++) {
+void calculateProductAboveAuxiliaryDiagonal(int** matrix, int matrixSize) {
+	int* results = new int[matrixSize - 1];
+	for (int i = 0; i < matrixSize - 1; i++) {
 		results[i] = 1;
-		for (int k = 0; k < rows - 1 - i; k++) {
+		for (int k = 0; k < matrixSize - 1 - i; k++) {
 			results[i] *= matrix[i][k];
 		}
 		cout << "Line " << i + 1 << " product is " << results[i] << endl;
 	}
 
-	F(results, rows - 1);
+	sumOfArrayElements(results, matrixSize - 1);
 }
 
-void F(int* arrayWithResults, int arrayLength) {
+void sumOfArrayElements(int* inputArray, int arrayLength) {
 	int sum = 0;
 	for (int i = 0; i < arrayLength; i++) {
-		sum += arrayWithResults[i];
+		sum += inputArray[i];
 	}
 
 	cout << "Sum of all f-function values is: " << sum << endl;
