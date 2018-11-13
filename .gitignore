@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
-
+*.sln
+*.user
+*.filters
+*.vcxproj
 # Compiled Object files
 *.slo
 *.lo
